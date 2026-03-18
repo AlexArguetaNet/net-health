@@ -1,9 +1,17 @@
 from utils.ping import ping_host
+from utils.get_ip_addrs import get_default_gateway_ip, get_loopback_ip
 import sys
 
 def main():
 
-    hosts = ["127.0.0.1", "8.8.8.8"]
+    # Get the loopback and default gateway IP addresses
+    loopback_ip = get_loopback_ip()
+    default_gateway_ip = get_default_gateway_ip()
+
+    # These hosts will be tested by default
+    hosts = [loopback_ip, default_gateway_ip,"8.8.8.8"]
+
+    # Other hosts entered as command-line arguments
     other_hosts = sys.argv[1:]
 
     if other_hosts:
@@ -11,6 +19,7 @@ def main():
 
     for host in hosts:
         ping_host(host)
+
 
 if __name__ == "__main__":
     main()

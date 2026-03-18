@@ -13,7 +13,7 @@ def ping_host(host):
     flag = get_ping_flag()
 
     command = ["ping", flag, "4", host]
-    print(f"Pinging {host}. One moment please.")
+    print(f"Testing connection to {host} \nOne moment please.\n")
     result = subprocess.run(command, capture_output=True, text=True)
 
     print(result.stdout)
