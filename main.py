@@ -1,16 +1,16 @@
-from utils.ping import ping_ip
+from utils.ping import ping_host
 import sys
 
 def main():
 
-    ip_addresses = ["127.0.0.1", "8.8.8.8"]
-    other_ip = sys.argv[1:]
+    hosts = ["127.0.0.1", "8.8.8.8"]
+    other_hosts = sys.argv[1:]
 
-    if other_ip:
-        ip_addresses = ip_addresses + other_ip
+    if other_hosts:
+        hosts = hosts + other_hosts
 
-    for ip in ip_addresses:
-        ping_ip(ip)
+    for host in hosts:
+        ping_host(host)
 
 if __name__ == "__main__":
     main()

@@ -9,11 +9,11 @@ def get_ping_flag():
     else:
         return "-c"
     
-def ping_ip(ip_address):
+def ping_host(host):
     flag = get_ping_flag()
 
-    command = ["ping", flag, "4", ip_address]
-    print(f"Pinging {ip_address}. One moment please.")
+    command = ["ping", flag, "4", host]
+    print(f"Pinging {host}. One moment please.")
     result = subprocess.run(command, capture_output=True, text=True)
 
     print(result.stdout)
