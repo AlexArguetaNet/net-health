@@ -1,33 +1,48 @@
-import netifaces
+import subprocess
+import platform
+
+os_name = platform.system().lower()
 
 def get_default_gateway_ip():
 
+    default_gateway_ip = None
+
     try:
-        default_gateway = netifaces.default_gateway()
-        default_gateway_ip = default_gateway[netifaces.InterfaceType.AF_INET][0]
 
+        if os_name == "linux":
+
+            result = subprocess.run(["ip", "route"], capture_output=True, text=True)
+            output_list = result.stdout.split(" ")
+            default_gateway_ip = output_list[2]
+        
+        elif os_name == "windows":
+
+            result = subprocess.run(["ipconfig"], capture_output=True, text=True)
+        
         return default_gateway_ip
-    
-    except Exception as e: # Default gateway interface not present on this computer
-        return None
 
+    except Exception as e:
+        return None
+    
 def get_loopback_ip():
 
-    interface = ""
-
-    # Get the loopback interface lo or lo0
-    for i in netifaces.interfaces():
-        if i == "lo" or i == "lo0":
-            interface = i
-            break
+    loopback_ip = None
     
-    if interface == "": # Loopback interface not on this computer
-        return None
-    else:
-        # Extract loopback IP address
-        interface_addresses = netifaces.ifaddresses(interface)
-        loopback_ip = interface_addresses[netifaces.AF_INET][0]["addr"]
+    try:
+        
+        if os_name == "linux":
+            command = ["ip", "a", "show", "dev", "lo"]
+            result = subprocess.run(command, capture_output=True, text=True)
+            result = result.stdout.strip().split("\n")
+
+            ip_line = result[2].strip()
+            loopback_ip = ip_line.split()[1].split("/")[0]
 
         return loopback_ip
+        
+
+    except Exception as e:
+        return None
+
 
 
