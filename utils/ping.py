@@ -16,6 +16,4 @@ def ping_host(host):
     print(f"Testing connection to {host} \nOne moment please.\n")
     result = subprocess.run(command, capture_output=True, text=True)
 
-    print(result.stdout)
-
-    return result.returncode
+    return result.stdout

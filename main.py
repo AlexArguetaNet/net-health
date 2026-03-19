@@ -17,7 +17,7 @@ def main():
         hosts = hosts + other_hosts
 
     for host in hosts:
-        ping_host(host)
+        print(ping_host(host))
 
 
 
