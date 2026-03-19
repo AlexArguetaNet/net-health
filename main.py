@@ -1,4 +1,4 @@
-from utils.ping import ping_host
+from utils.ping import ping_host, ping_stats
 from utils.get_ip_addrs import get_default_gateway_ip, get_loopback_ip
 import sys
 
@@ -17,7 +17,7 @@ def main():
         hosts = hosts + other_hosts
 
     for host in hosts:
-        ping_host(host)
+        print(ping_stats(host))
 
 
 

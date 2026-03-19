@@ -24,12 +24,10 @@ def ping_stats(host):
     try:
         
         results = ping_host(host)
+        packets_line = []
+        time_line = []
 
         if os_name == "windows":
-
-            packets_line = []
-            time_line = []
-
             for line in results:
                 if "Packets" in line:
                     packets_line = line.strip().replace(" ", "").split(",")
@@ -39,11 +37,19 @@ def ping_stats(host):
             packet_lost = packets_line[2].split("=")[1][0]
             min_time = time_line[0].split("=")[1].split("m")[0]
 
+        elif os_name == "linux":
+            for line in results:
+                if "packets" in line:
+                    packets_line = line.strip().replace(" ", "").split(",")
+                if "rtt" in line:
+                    time_line = line.strip().replace(" ", "").split("=")
+            
+            packet_lost = packets_line[2][0]
+            min_time = time_line[1].split("/")[0]
+
+            min_time = float(min_time)
 
         return [int(packet_lost), int(min_time)]
-
-
-
 
     except Exception as e:
         return None
