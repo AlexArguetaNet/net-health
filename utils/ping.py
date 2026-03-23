@@ -36,6 +36,8 @@ def ping_results(host):
             
             packet_loss = packets_line[2].split("=")[1][0]
             min_time = time_line[0].split("=")[1].split("m")[0]
+            avg_latency = time_line[2].split("=")[1].split("m")[0]
+            max_time = time_line[1].split("=")[1].split("m")[0]
 
         elif os_name == "linux":
             for line in results:
