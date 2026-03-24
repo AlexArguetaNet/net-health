@@ -1,4 +1,4 @@
-from utils.ping import ping_host
+from utils.ping import ping_results, grade_connection
 from utils.get_ip_addrs import get_default_gateway_ip, get_loopback_ip
 import sys
 
@@ -17,8 +17,12 @@ def main():
         hosts = hosts + other_hosts
 
     for host in hosts:
-        print(ping_host(host))
+        results = ping_results(host)
 
+        if results == None:
+            print("No connection")
+        else:
+            print(grade_connection(*results))
 
 
 if __name__ == "__main__":
