@@ -20,9 +20,6 @@ def ping_host(host):
     return result
 
 def ping_results(host):
-
-
-
     try:
         
         results = ping_host(host)

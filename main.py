@@ -1,5 +1,6 @@
 from utils.ping import ping_results, grade_connection
 from utils.get_ip_addrs import get_default_gateway_ip, get_loopback_ip
+from utils.responses import get_grade_response
 import sys
 
 def main():
@@ -16,13 +17,11 @@ def main():
     if other_hosts:
         hosts = hosts + other_hosts
 
-    for host in hosts:
-        results = ping_results(host)
+    # Test loopback address
+    loopback_grade = grade_connection(*ping_results(loopback_ip))
+    loopback_analysis = get_grade_response(loopback_grade, 1)
 
-        if results == None:
-            print("No connection")
-        else:
-            print(grade_connection(*results))
+    print(loopback_analysis)
 
 
 if __name__ == "__main__":
