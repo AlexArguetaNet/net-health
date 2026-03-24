@@ -21,6 +21,8 @@ def ping_host(host):
 
 def ping_results(host):
 
+
+
     try:
         
         results = ping_host(host)
@@ -93,6 +95,6 @@ def grade_connection(packet_loss, avg_latency, jitter):
         else:
             description = "POOR"
     
-    return score, description
+    return int(score), description
 
 
