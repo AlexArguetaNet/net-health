@@ -4,7 +4,6 @@ import platform
 os_name = platform.system().lower()
 
 def get_default_gateway_ip():
-
     default_gateway_ip = None
 
     try:
@@ -31,7 +30,6 @@ def get_default_gateway_ip():
         return None
     
 def get_loopback_ip():
-
     loopback_ip = None
     
     try:
