@@ -75,7 +75,8 @@ def grade_connection(packet_loss, avg_latency, jitter):
     # Make sure the score is between 0 and 100
     score = max(0, min(100, score))
 
-    # Assign description to grade
+    # Assign status and description to grade
+    status = ""
     description = ""
 
     if packet_loss >= 100:
@@ -90,6 +91,11 @@ def grade_connection(packet_loss, avg_latency, jitter):
         else:
             description = "POOR"
     
-    return int(score), description
+    if score >= 80:
+        status = "OK"
+    else:
+        status = "!!"
+    
+    return status, description
 
 
