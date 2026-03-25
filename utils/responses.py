@@ -31,13 +31,13 @@ generic_responses = {
 }
 
 def get_grade_response(results, id):
-    if id == 1:
+    if id == 0:
         responses = loopback_responses
-    elif id == 2:
+    elif id == 1:
         responses = dg_responses
-    elif id == 3:
+    elif id == 2:
         responses = open_web_responses
     else:
         responses = generic_responses
 
-    return responses[results[1]]
+    return results[0], results[1], responses[results[1]]

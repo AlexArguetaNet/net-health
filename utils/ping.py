@@ -13,7 +13,6 @@ def ping_host(host):
     flag = get_ping_flag()
 
     command = ["ping", flag, "4", host]
-    print(f"Testing connection to {host} \nOne moment please.\n")
     result = subprocess.run(command, capture_output=True, text=True)
     result = result.stdout.strip().split("\n")
 
@@ -56,7 +55,6 @@ def ping_results(host):
         return None
 
 def grade_connection(packet_loss, avg_latency, jitter):
-
     score = 100
 
     # Deduct for packet loss: 1% drops 20 points
