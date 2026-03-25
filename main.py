@@ -1,8 +1,10 @@
 from utils.ping import ping_results, grade_connection
 from utils.get_ip_addrs import get_default_gateway_ip, get_loopback_ip
 from utils.responses import get_grade_response
-from utils.net_test import test_connections
+from utils.net_test import test_connections, spinner
 import sys
+import threading
+import time
 
 def main():
     print("\n================================================")
@@ -13,16 +15,36 @@ def main():
     default_gateway_ip = get_default_gateway_ip()
     loopback_ip = get_loopback_ip()
     default_hosts = [loopback_ip, default_gateway_ip,"8.8.8.8"]
-
-    # Get hosts from command-line arguments
+    default_names = ["Localhost", "Router", "Internet"]
     other_hosts = sys.argv[1:]
 
-    # Test default hosts
-    test_connections(default_hosts, True)
+    t = threading.Thread(target=spinner)
+    t.daemon = True
+    t.start()
 
-    # Test additional hosts if any
+    try:
+        default_output = test_connections(default_hosts, True)
+        if other_hosts:
+            other_output = test_connections(other_hosts, False)
+    finally:
+        t.do_run = False
+        t.join()
+
+    print("CORE CONNECTIVITY:")
+    id = 0
+    for line in default_output:
+        print(f"[ {line[0]:^4} ] {default_names[id]:<12} : {line[2]} ")
+        id += 1
+
     if other_hosts:
-        test_connections(other_hosts, False)
+        print("\nEXTERNAL HOSTS:")
+        i = 0
+        for line in other_output:
+            print(f"[ {line[0]:^4} ] {other_hosts[i]:<12} : {line[2]} ")
+            i += 1
+
+    print("\n")
+    
 
 if __name__ == "__main__":
     main()
